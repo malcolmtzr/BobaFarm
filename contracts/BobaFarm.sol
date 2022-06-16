@@ -30,8 +30,10 @@ contract BobaFarm {
     PearlToken public pearlToken;
 
     //events
-    event Stake(address indexed from, uint256 amount, string token);
-    event Unstake(address indexed from, uint256 amount, string token);
+    //event Stake(address indexed from, uint256 amount, string token);
+    //event Unstake(address indexed from, uint256 amount, string token);
+    event Stake(address indexed from, string lp1, uint256 amountLp1, string lp2, uint256 amountLp2, string lp3, uint256 amountLp3);
+    event Unstake(address indexed from, string lp1, uint256 amountLp1, string lp2, uint256 amountLp2, string lp3, uint256 amountLp3);
     event HarvestRewards(address indexed to, uint256 amount);
 
     constructor(BobaToken _bobaToken, MilkToken _milkToken, TeaToken _teaToken, PearlToken _pearlToken) {
@@ -66,9 +68,14 @@ contract BobaFarm {
         startBlock[msg.sender] = block.number;
         staking[msg.sender] = true;
 
-        emit Stake(msg.sender, milkAmount, "MILK");
-        emit Stake(msg.sender, teaAmount, "TEA");
-        emit Stake(msg.sender, pearlAmount, "PEARL");
+        //Award users rewards token when they stake to farm
+        uint256 stakingRewards = rewardTokensPerBlock;
+        bobaToken.mint(msg.sender, stakingRewards);
+
+        //emit Stake(msg.sender, milkAmount, "MILK");
+        //emit Stake(msg.sender, teaAmount, "TEA");
+        //emit Stake(msg.sender, pearlAmount, "PEARL");
+        emit Stake(msg.sender, "MILK", milkAmount, "TEA", teaAmount, "PEARL", pearlAmount);
     }
 
     function unstakeTokens(uint256 milkAmount, uint256 teaAmount, uint256 pearlAmount) public {
@@ -102,9 +109,10 @@ contract BobaFarm {
 
         startBlock[msg.sender] = block.number;
 
-        emit Unstake(msg.sender, milkTransferAmount, "MILK");
-        emit Unstake(msg.sender, teaTransferAmount, "TEA");
-        emit Unstake(msg.sender, pearlTransferAmount, "PEARL");
+        //emit Unstake(msg.sender, milkTransferAmount, "MILK");
+        //emit Unstake(msg.sender, teaTransferAmount, "TEA");
+        //emit Unstake(msg.sender, pearlTransferAmount, "PEARL");
+        emit Unstake(msg.sender, "MILK", milkAmount, "TEA", teaAmount, "PEARL", pearlAmount);
     }
 
     function getCurrentYield(address user) public view returns (uint256) {

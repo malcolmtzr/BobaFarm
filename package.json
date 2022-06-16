@@ -17,5 +17,16 @@
   },
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/malcolmtzr/BobaFarm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/malcolmtzr/BobaFarm/issues"
+  },
+  "homepage": "https://github.com/malcolmtzr/BobaFarm#readme",
+  "devDependencies": {
+    "truffle-plugin-verify": "^0.5.26"
+  },
   "description": ""
 }
