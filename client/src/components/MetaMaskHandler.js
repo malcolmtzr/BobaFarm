@@ -18,7 +18,8 @@ export default function MetaMaskHandler() {
     }, []);
 
     const handleAccountChange = async (userAccount) => {
-        setAccount(userAccount);
+        setAccount(userAccount[0]);
+        console.log(userAccount[0]);
     }
 
     const handleConnect = async () => {
@@ -29,8 +30,8 @@ export default function MetaMaskHandler() {
                         method: "eth_requestAccounts"
                     }
                 );
-                console.log(response[0]);
-                handleAccountChange(response[0]);
+                //console.log(response);
+                handleAccountChange(response);
             }
             catch (error) {
                 alert("Error connecting to MetaMask")
