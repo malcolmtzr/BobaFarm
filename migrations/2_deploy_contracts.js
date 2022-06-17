@@ -1,4 +1,5 @@
 var bobaToken = artifacts.require("BobaToken");
+var tokenFactory = artifacts.require("TokenFactory");
 var milkToken = artifacts.require("MilkToken");
 var teaToken = artifacts.require("TeaToken");
 var pearlToken = artifacts.require("pearlToken");
@@ -8,6 +9,8 @@ module.exports = async function(deployer) {
 
   await deployer.deploy(bobaToken);
   const bobaTokenInstance = await bobaToken.deployed();
+
+  await deployer.deploy(tokenFactory);
   
   await deployer.deploy(milkToken, 2000000);
   const milkTokenInstance = await milkToken.deployed();
