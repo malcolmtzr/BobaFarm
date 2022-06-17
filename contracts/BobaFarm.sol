@@ -57,9 +57,9 @@ contract BobaFarm {
             bobaBalance[msg.sender] += amtToTransferToRewards;
         }
 
-        milkToken.transferFrom(msg.sender, address(this), milkAmount);
-        teaToken.transferFrom(msg.sender, address(this), teaAmount);
-        pearlToken.transferFrom(msg.sender, address(this), pearlAmount);
+        milkToken.transferFrom(msg.sender, address(this), milkAmount * 10 ** 18);
+        teaToken.transferFrom(msg.sender, address(this), teaAmount * 10 ** 18);
+        pearlToken.transferFrom(msg.sender, address(this), pearlAmount * 10 ** 18);
 
         milkStakingBalance[msg.sender] += milkAmount;
         teaStakingBalance[msg.sender] += teaAmount;
@@ -97,11 +97,11 @@ contract BobaFarm {
         pearlAmount = 0;
 
         milkStakingBalance[msg.sender] -= milkTransferAmount;
-        milkToken.transfer(msg.sender, milkTransferAmount);
+        milkToken.transfer(msg.sender, milkTransferAmount * 10 ** 18);
         teaStakingBalance[msg.sender] -= teaTransferAmount;
-        teaToken.transfer(msg.sender, teaTransferAmount);
+        teaToken.transfer(msg.sender, teaTransferAmount * 10 ** 18);
         pearlStakingBalance[msg.sender] -= pearlTransferAmount;
-        pearlToken.transfer(msg.sender, pearlTransferAmount);
+        pearlToken.transfer(msg.sender, pearlTransferAmount * 10 ** 18);
 
         if (milkStakingBalance[msg.sender] == 0 || teaStakingBalance[msg.sender] == 0 || pearlStakingBalance[msg.sender] == 0) {
             staking[msg.sender] = false;
