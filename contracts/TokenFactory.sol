@@ -9,26 +9,26 @@ contract TokenFactory {
     event TeaTokenCreated(address contractAddress);
     event PearlTokenCreated(address contractAddress);
 
-    MilkToken[] public milkTokenArray;
-    TeaToken[] public teaTokenArray;
-    PearlToken[] public pearlTokenArray;
+    MilkToken[] private milkTokenArray;
+    TeaToken[] private teaTokenArray;
+    PearlToken[] private pearlTokenArray;
 
-    function createNewMilkToken() public returns (address) {
-        MilkToken milkToken = new MilkToken(2000000);
+    function createNewMilkToken(address user, uint256 initialSupply) public returns (address) {
+        MilkToken milkToken = new MilkToken(user, initialSupply);
         milkTokenArray.push(milkToken);
         emit MilkTokenCreated(address(milkToken));
         return address(milkToken);
     }
 
-    function createNewTeaToken() public returns (address) {
-        TeaToken teaToken = new TeaToken(2500000);
+    function createNewTeaToken(address user, uint256 initialSupply) public returns (address) {
+        TeaToken teaToken = new TeaToken(user, initialSupply);
         teaTokenArray.push(teaToken);
         emit TeaTokenCreated(address(teaToken));
         return address(teaToken);
     }
 
-    function createNewPearlToken() public returns (address) {
-        PearlToken pearlToken = new PearlToken(2400000);
+    function createNewPearlToken(address user, uint256 initialSupply) public returns (address) {
+        PearlToken pearlToken = new PearlToken(user, initialSupply);
         pearlTokenArray.push(pearlToken);
         emit PearlTokenCreated(address(pearlToken));
         return address(pearlToken);

@@ -46,6 +46,6 @@ module.exports = {
   ],
 
   api_keys: {
-    etherscan: "..."
+    etherscan: "D7E7Y82KCE3FERNQHWH28MP9CKG3AVY44B"
   }
 };

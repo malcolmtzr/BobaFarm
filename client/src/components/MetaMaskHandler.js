@@ -3,7 +3,7 @@ import getWeb3 from "../getWeb3"
 import Web3 from "web3";
 import Button from "@mui/material/Button";
 
-export default function MetaMaskHandler() {
+export default function MetaMaskHandler(props) {
 
     const [account, setAccount] = useState("");
 
@@ -14,12 +14,11 @@ export default function MetaMaskHandler() {
     }, []);
 
     useEffect(() => {
-
-    }, []);
+        props.onConnect(account);
+    }, [account]);
 
     const handleAccountChange = async (userAccount) => {
         setAccount(userAccount[0]);
-        console.log(userAccount[0]);
     }
 
     const handleConnect = async () => {
@@ -32,6 +31,9 @@ export default function MetaMaskHandler() {
                 );
                 //console.log(response);
                 handleAccountChange(response);
+                if (response.length !== 0) {
+                    alert("You are already connected to MetaMask");
+                }
             }
             catch (error) {
                 alert("Error connecting to MetaMask")
@@ -44,8 +46,8 @@ export default function MetaMaskHandler() {
 
     return (
         <div>
-            <Button variant="contained" onClick={handleConnect}>
-                Connect
+            <Button variant="contained" onClick={handleConnect} sx={{width: "100%"}}>
+                Connect to MetaMask
             </Button>
         </div>
     )

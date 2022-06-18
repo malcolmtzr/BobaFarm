@@ -7,7 +7,11 @@ contract BobaToken is ERC20, Ownable {
     constructor () ERC20("BobaToken", "BOBA") {}
 
     function mint(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount * 10 ** 18);
+        _mint(to, amount);
+    }
+
+    function decimals() public view override returns (uint8) {
+        return 0;
     }
 
     //transferOwnership in Ownable
