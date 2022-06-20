@@ -11,11 +11,8 @@ import GrainIcon from '@mui/icons-material/Grain';
 
 
 export default function StakingTable(props) {
-
-    const [bobaToken, setBobaToken] = useState("");
-    const [milkToken2, setMilkToken2] = useState("");
-    const [teaToken2, setTeaToken2] = useState("");
-    const [pearlToken2, setPearlToken2] = useState("");
+    console.log("test");
+    const [bobaTokenAmount, setBobaTokenAmount] = useState();
 
     const [currentStakedAmounts, setCurrentStakedAmounts] = useState(
         {
@@ -33,8 +30,6 @@ export default function StakingTable(props) {
         }
     );
 
-    const [bobaTokenAmount, setBobaTokenAmount] = useState(props.onRewardBalance);
-
     const milk2Input = useRef(null);
     const tea2Input = useRef(null);
     const pearl2Input = useRef(null);
@@ -47,10 +42,7 @@ export default function StakingTable(props) {
     const [tea2ErrorText, setTea2ErrorText] = useState("");
     const [pearl2ErrorText, setPearl2ErrorText] = useState("");
     
-    useEffect( async () => {
-        //setMilkToken2();
-        //setTeaToken2();
-        //setPearlToken2();
+    useEffect(() => {
     }, []);
 
     const onStakeMilk2Change = (event) => {
@@ -207,16 +199,16 @@ export default function StakingTable(props) {
             </Grid>
             <Divider style={{width: "100%", paddingTop:"10px"}}/>
             <Box sx={{display: "grid", justifyItems: "center", paddingTop: "10px", width: "100%"}}>
-                <Button variant="contained" fullWidth onClick={onStake} disabled={props.onLoadingStaking}>Stake Tokens</Button>
+                <Button variant="contained" fullWidth onClick={onStake} disabled={props.onLoadingStaking}>{props.onLoadingStaking ? "Working on it... MetaMask will pop up a number of times" : "Stake Tokens"}</Button>
             </Box>
             <Typography variant="h5" sx={{paddingTop: "40px"}}>Rewards</Typography>
             <Divider style={{width: "100%"}}/>
             <Box sx={{display: "grid", justifyItems: "center", paddingTop: "10px", width: "100%"}}>
-                <Button variant="contained" fullWidth onClick={onHarvest} disabled={props.onLoadingHarvest}>Harvest Rewards</Button>
+                <Button variant="contained" fullWidth onClick={onHarvest} disabled={props.onLoadingHarvest}>{props.onLoadingHarvest ? "Working on it..." : "Harvest Rewards"}</Button>
             </Box>
             <Box sx={{display: "flex", alignItems: "center", justifyContent: "space-evenly", paddingTop: "10px", width: "100%"}}>
                 <Typography variant="h5" sx={{paddingTop: "20px"}}>Current wallet balance: </Typography>
-                <Typography variant="h5" sx={{paddingTop: "20px"}}>{bobaTokenAmount} BOBA</Typography>
+                <Typography variant="h5" sx={{paddingTop: "20px"}}>{props.onRewardBalance} BOBA</Typography>
             </Box>
         </Box>
     )

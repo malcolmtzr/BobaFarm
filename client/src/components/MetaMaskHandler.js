@@ -42,7 +42,7 @@ export default function MetaMaskHandler(props) {
                 }
             }
             catch (error) {
-                alert("Error connecting to MetaMask")
+                alert("Check MetaMask extension")
             }
         }
         else {

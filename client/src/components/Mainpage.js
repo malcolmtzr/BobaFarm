@@ -51,6 +51,17 @@ export default function Mainpage() {
         }
     }
 
+    const handleAccountChange = (...args) => {
+        const accounts = args[0];
+        if (accounts.length === 0) {
+          console.log("Please connect to MetaMask");
+        }
+        else if (accounts[0] !== account1) {
+          setAccount1(accounts[0]);
+          window.location.reload(false);
+        }
+      };
+
     const loadFarm = async (web3, account) => {
         console.log(account);
         const netId = await web3.eth.net.getId();
@@ -116,6 +127,7 @@ export default function Mainpage() {
         if (stakingAmounts.stakeMilk2Amount == "0" || stakingAmounts.stakeTea2Amount == "0" ||
             stakingAmounts.stakePearl2Amount == "0") {
             handleDialogueOpen();
+            setLoadingStaking(false);
         }
         else {
             const toStakeMilk2 = stakingAmounts.stakeMilk2Amount;
@@ -180,6 +192,13 @@ export default function Mainpage() {
         }
         loadBlockchainData();
     }, [account])
+
+    useEffect( async () => {
+        window.ethereum.on("accountsChanged", handleAccountChange);
+        return () => {
+          window.ethereum.removeListener("accountsChanged", handleAccountChange);
+        }
+      }, [account1])
 
     return (
         <Box>
