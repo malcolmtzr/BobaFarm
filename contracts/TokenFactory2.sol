@@ -1,8 +1,5 @@
 pragma solidity ^0.8.7;
 
-import "./MilkToken.sol";
-import "./TeaToken.sol";
-import "./PearlToken.sol";
 import "./MilkToken2.sol";
 import "./TeaToken2.sol";
 import "./PearlToken2.sol";
@@ -41,35 +38,35 @@ contract TokenFactory2 {
         return address(milkToken2Array[milkToken2Array.length - 1]);
     }
 
-    function getAllMilkToken2Address() public view returns (address[] memory) {
-        address[] memory result = new address[](milkToken2Array.length);
-        for (uint i = 0; i <= milkToken2Array.length - 1; i++) {
-            result[i] = address(milkToken2Array[i]);
-        }
-        return result;
-    }
+    // function getAllMilkToken2Address() public view returns (address[] memory) {
+    //     address[] memory result = new address[](milkToken2Array.length);
+    //     for (uint i = 0; i <= milkToken2Array.length - 1; i++) {
+    //         result[i] = address(milkToken2Array[i]);
+    //     }
+    //     return result;
+    // }
 
     function getRecentTeaToken2Address() public view returns (address) {
         return address(teaToken2Array[teaToken2Array.length - 1]);
     }
 
-    function getAllTeaToken2Address() public view returns (address[] memory) {
-        address[] memory result = new address[](teaToken2Array.length);
-        for (uint i = 0; i <= teaToken2Array.length - 1; i++) {
-            result[i] = address(teaToken2Array[i]);
-        }
-        return result;
-    }
+    // function getAllTeaToken2Address() public view returns (address[] memory) {
+    //     address[] memory result = new address[](teaToken2Array.length);
+    //     for (uint i = 0; i <= teaToken2Array.length - 1; i++) {
+    //         result[i] = address(teaToken2Array[i]);
+    //     }
+    //     return result;
+    // }
 
     function getRecentPearlToken2Address() public view returns (address) {
         return address(pearlToken2Array[pearlToken2Array.length - 1]);
     }
 
-    function getAllPearlToken2Address() public view returns (address[] memory) {
-        address[] memory result = new address[](pearlToken2Array.length);
-        for (uint i = 0; i <= pearlToken2Array.length - 1; i++) {
-            result[i] = address(pearlToken2Array[i]);
-        }
-        return result;
-    }    
+    // function getAllPearlToken2Address() public view returns (address[] memory) {
+    //     address[] memory result = new address[](pearlToken2Array.length);
+    //     for (uint i = 0; i <= pearlToken2Array.length - 1; i++) {
+    //         result[i] = address(pearlToken2Array[i]);
+    //     }
+    //     return result;
+    // }    
 }

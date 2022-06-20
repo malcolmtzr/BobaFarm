@@ -12,10 +12,13 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.8.4",
     "@mui/styled-engine-sc": "^5.8.0",
+    "@reduxjs/toolkit": "^1.8.2",
     "babel-plugin-macros": "^3.1.0",
+    "ethers": "^5.6.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.4.0",
+    "react-redux": "^8.0.2",
     "react-scripts": "3.2.0",
     "styled-components": "^5.3.5",
     "web3": "^1.7.3"
@@ -40,5 +43,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
 }

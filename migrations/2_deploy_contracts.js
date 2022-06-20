@@ -33,5 +33,9 @@ module.exports = async function(deployer) {
 
   await deployer.deploy(bobaFarm, bobaTokenInstance.address, milkToken2Instance.address, teaToken2Instance.address, pearlToken2Instance.address);
   const bobaFarmInstance = await bobaFarm.deployed();
-  //await bobaFarmInstance.addTokensToFarm(milkToken2Instance.address, teaToken2Instance.address, pearlToken2Instance.address);
+  
+  await bobaTokenInstance.transferOwnership(bobaFarmInstance.address);
+  await milkToken2Instance.transferOwnership(bobaFarmInstance.address);
+  await teaToken2Instance.transferOwnership(bobaFarmInstance.address);
+  await pearlToken2Instance.transferOwnership(bobaFarmInstance.address);
 };

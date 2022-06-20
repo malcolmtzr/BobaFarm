@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setAccount } from "../redux/accountSlice";
 import getWeb3 from "../getWeb3"
 import Web3 from "web3";
 import Button from "@mui/material/Button";
 
 export default function MetaMaskHandler(props) {
 
-    const [account, setAccount] = useState("");
+    //const [account, setAccount] = useState("");
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (window.ethereum) {
@@ -13,12 +16,15 @@ export default function MetaMaskHandler(props) {
         }
     }, []);
 
-    useEffect(() => {
-        props.onConnect(account);
-    }, [account]);
+    // useEffect(() => {
+    //     props.onConnect(account);
+    // }, [account]);
 
-    const handleAccountChange = async (userAccount) => {
-        setAccount(userAccount[0]);
+    const handleAccountChange = (userAccount) => {
+        //setAccount(userAccount[0]);
+        dispatch(setAccount({
+            account: userAccount[0]
+        }));
     }
 
     const handleConnect = async () => {
@@ -32,7 +38,7 @@ export default function MetaMaskHandler(props) {
                 //console.log(response);
                 handleAccountChange(response);
                 if (response.length !== 0) {
-                    alert("You are already connected to MetaMask");
+                    alert("Connected");
                 }
             }
             catch (error) {

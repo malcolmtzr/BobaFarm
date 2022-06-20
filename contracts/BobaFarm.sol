@@ -47,11 +47,21 @@ contract BobaFarm {
         pearlToken = _pearlToken;
     }
 
-    //function addTokensToFarm(MilkToken2 _milkToken, TeaToken2 _teaToken, PearlToken2 _pearlToken) public {
-    //    milkToken = _milkToken;
-    //    teaToken = _teaToken;
-    //    pearlToken = _pearlToken;
-    //}
+    function getBobaBalance(address user) public view returns (uint256) {
+        return bobaBalance[user];
+    }
+
+    function getMilkStakingBalance(address user) public view returns (uint256) {
+        return milkStakingBalance[user];
+    }
+
+    function getTeaStakingBalance(address user) public view returns (uint256) {
+        return teaStakingBalance[user];
+    }
+
+    function getPearlStakingBalance(address user) public view returns (uint256) {
+        return pearlStakingBalance[user];
+    }
 
     function stakeTokens(uint256 milkAmount, uint256 teaAmount, uint256 pearlAmount) public {
         require(milkAmount > 0 && milkToken.balanceOf(msg.sender) >= milkAmount &&

@@ -17,9 +17,13 @@ export default function StakingTable(props) {
     const [teaToken2, setTeaToken2] = useState("");
     const [pearlToken2, setPearlToken2] = useState("");
 
-    //const [stakeMilkToken2Amt, setStakeMilkToken2Amt] = useState(0);
-    //const [stakeTeaToken2Amt, setStakeTeaToken2Amt] = useState(0);
-    //const [stakePearlToken2Amt, setPearlToken2Amt] = useState(0);
+    const [currentStakedAmounts, setCurrentStakedAmounts] = useState(
+        {
+            stakedMilk2Amount: props.onStakingBalances.milk2StakingBalance,
+            stakedTea2Amount: props.onStakingBalances.tea2StakingBalance,
+            stakedPearl2Amount: props.onStakingBalances.pearl2StakingBalance
+        }
+    );
 
     const [stakingAmounts, setStakingAmounts] = useState(
         {
@@ -29,7 +33,7 @@ export default function StakingTable(props) {
         }
     );
 
-    const [bobaTokenAmount, setBobaTokenAmount] = useState(0);
+    const [bobaTokenAmount, setBobaTokenAmount] = useState(props.onRewardBalance);
 
     const milk2Input = useRef(null);
     const tea2Input = useRef(null);
@@ -139,6 +143,7 @@ export default function StakingTable(props) {
                                 inputRef={milk2Input} 
                                 error={milk2InputError} 
                                 helperText={milk2ErrorText}/>
+                                <Typography variant="button">Staked on Farm: {currentStakedAmounts.stakedMilk2Amount}</Typography>
                             </Box>
                         </CardActions>
                     </Card>
@@ -166,6 +171,7 @@ export default function StakingTable(props) {
                                 inputRef={tea2Input} 
                                 error={tea2InputError} 
                                 helperText={tea2ErrorText}/>
+                                <Typography variant="button">Staked on Farm: {currentStakedAmounts.stakedTea2Amount}</Typography>
                             </Box>
                         </CardActions>
                     </Card>
@@ -193,6 +199,7 @@ export default function StakingTable(props) {
                                 inputRef={pearl2Input} 
                                 error={pearl2InputError} 
                                 helperText={pearl2ErrorText}/>
+                                <Typography variant="button">Staked on Farm: {currentStakedAmounts.stakedPearl2Amount}</Typography>
                             </Box>
                         </CardActions>
                     </Card>
@@ -200,15 +207,15 @@ export default function StakingTable(props) {
             </Grid>
             <Divider style={{width: "100%", paddingTop:"10px"}}/>
             <Box sx={{display: "grid", justifyItems: "center", paddingTop: "10px", width: "100%"}}>
-                <Button variant="contained" fullWidth onClick={onStake}>Stake Tokens</Button>
+                <Button variant="contained" fullWidth onClick={onStake} disabled={props.onLoadingStaking}>Stake Tokens</Button>
             </Box>
             <Typography variant="h5" sx={{paddingTop: "40px"}}>Rewards</Typography>
             <Divider style={{width: "100%"}}/>
             <Box sx={{display: "grid", justifyItems: "center", paddingTop: "10px", width: "100%"}}>
-                <Button variant="contained" fullWidth onClick={onHarvest}>Harvest Rewards</Button>
+                <Button variant="contained" fullWidth onClick={onHarvest} disabled={props.onLoadingHarvest}>Harvest Rewards</Button>
             </Box>
             <Box sx={{display: "flex", alignItems: "center", justifyContent: "space-evenly", paddingTop: "10px", width: "100%"}}>
-                <Typography variant="h5" sx={{paddingTop: "20px"}}>Rewards: </Typography>
+                <Typography variant="h5" sx={{paddingTop: "20px"}}>Current wallet balance: </Typography>
                 <Typography variant="h5" sx={{paddingTop: "20px"}}>{bobaTokenAmount} BOBA</Typography>
             </Box>
         </Box>
