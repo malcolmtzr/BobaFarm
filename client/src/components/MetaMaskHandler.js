@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 
 export default function MetaMaskHandler(props) {
 
-    //const [account, setAccount] = useState("");
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -16,12 +15,7 @@ export default function MetaMaskHandler(props) {
         }
     }, []);
 
-    // useEffect(() => {
-    //     props.onConnect(account);
-    // }, [account]);
-
     const handleAccountChange = (userAccount) => {
-        //setAccount(userAccount[0]);
         dispatch(setAccount({
             account: userAccount[0]
         }));
@@ -35,7 +29,6 @@ export default function MetaMaskHandler(props) {
                         method: "eth_requestAccounts"
                     }
                 );
-                //console.log(response);
                 handleAccountChange(response);
                 if (response.length !== 0) {
                     alert("Connected");

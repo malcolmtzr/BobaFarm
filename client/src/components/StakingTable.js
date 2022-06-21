@@ -11,8 +11,8 @@ import GrainIcon from '@mui/icons-material/Grain';
 
 
 export default function StakingTable(props) {
-    console.log("test");
-    const [bobaTokenAmount, setBobaTokenAmount] = useState();
+
+    //const [bobaTokenAmount, setBobaTokenAmount] = useState();
 
     const [currentStakedAmounts, setCurrentStakedAmounts] = useState(
         {
@@ -206,9 +206,9 @@ export default function StakingTable(props) {
             <Box sx={{display: "grid", justifyItems: "center", paddingTop: "10px", width: "100%"}}>
                 <Button variant="contained" fullWidth onClick={onHarvest} disabled={props.onLoadingHarvest}>{props.onLoadingHarvest ? "Working on it..." : "Harvest Rewards"}</Button>
             </Box>
-            <Box sx={{display: "flex", alignItems: "center", justifyContent: "space-evenly", paddingTop: "10px", width: "100%"}}>
-                <Typography variant="h5" sx={{paddingTop: "20px"}}>Current wallet balance: </Typography>
-                <Typography variant="h5" sx={{paddingTop: "20px"}}>{props.onRewardBalance} BOBA</Typography>
+            <Box sx={{display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "10px", width: "100%"}}>
+                <Typography variant="h4" sx={{paddingTop: "20px"}}>Current wallet balance: </Typography>
+                <Typography variant="h4" sx={{paddingTop: "20px"}}>{props.onRewardBalance} BOBA</Typography>
             </Box>
         </Box>
     )

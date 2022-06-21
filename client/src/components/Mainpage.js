@@ -41,7 +41,6 @@ export default function Mainpage() {
 
     const loadAccount = async (web3) => {
         const account = await web3.eth.getAccounts();
-        console.log(account);
         if (account) {
             setAccount1(account[0])
             return account[0];
@@ -63,16 +62,15 @@ export default function Mainpage() {
       };
 
     const loadFarm = async (web3, account) => {
-        console.log(account);
         const netId = await web3.eth.net.getId();
         const bobaFarmData = BobaFarm.networks[netId];
         if (bobaFarmData) {
             const bobaFarm = new web3.eth.Contract(BobaFarm.abi, bobaFarmData.address);
-            console.log(bobaFarm);
             setBobaFarmContract(bobaFarm);
-            const _milk2StakingBalance = await bobaFarm.methods.getMilkStakingBalance(account).call();
-            const _tea2StakingBalance = await bobaFarm.methods.getTeaStakingBalance(account).call();
-            const _pearl2StakingBalance = await bobaFarm.methods.getPearlStakingBalance(account).call();
+            //Not implemented - not getting the correct values; but Etherscan is able to.
+            const _milk2StakingBalance = await bobaFarm.methods.getMilkStakingBalance(account).call({from: account});
+            const _tea2StakingBalance = await bobaFarm.methods.getTeaStakingBalance(account).call({from: account});
+            const _pearl2StakingBalance = await bobaFarm.methods.getPearlStakingBalance(account).call({from: account});
             setStakingBalances(prevState => ({
                 ...prevState,
                 milk2StakingBalance: _milk2StakingBalance,
@@ -80,9 +78,7 @@ export default function Mainpage() {
                 pearl2StakingBalance: _pearl2StakingBalance
             }));
             console.log(stakingBalances);
-            //const _bobaBalance = await bobaFarm.methods.bobaBalance(account).call();
-            //console.log(_bobaBalance);
-            //setBobaBalance(_bobaBalance);
+            ///
         }
         else {
             alert("BobaFarm contract not deployed to network");
@@ -109,21 +105,11 @@ export default function Mainpage() {
         console.log(milkToken2);
         console.log(teaToken2);
         console.log(pearlToken2);
-        
     }
-
-    // const handleAccount = (account) => {
-    //     console.log(account);
-    //     setAccount(account);
-    // }
 
     const handleStaking = async (stakingAmounts) => {
         setLoadingStaking(true);
         console.log(stakingAmounts);
-        console.log(bobaFarmContract._address);
-        console.log(milkToken2Contract._address)
-        console.log(teaToken2Contract._address)
-        console.log(pearlToken2Contract._address)
         if (stakingAmounts.stakeMilk2Amount == "0" || stakingAmounts.stakeTea2Amount == "0" ||
             stakingAmounts.stakePearl2Amount == "0") {
             handleDialogueOpen();
@@ -141,6 +127,8 @@ export default function Mainpage() {
                 console.log(milk2Tx);
                 console.log(tea2Tx);
                 console.log(pearl2Tx);
+                const _bobaBalance = await bobaContract.methods.balanceOf(account1).call();
+                setBobaBalance(_bobaBalance);
             }
             catch (err) {
                 console.log(err);
@@ -158,6 +146,8 @@ export default function Mainpage() {
             .then(function(receipt) {
                 console.log(receipt);
             });
+            const _bobaBalance = await bobaContract.methods.balanceOf(account1).call();
+            setBobaBalance(_bobaBalance);
             setLoadingHarvest(false);
         }
         catch (err) {
