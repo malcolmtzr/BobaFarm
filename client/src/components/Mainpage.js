@@ -24,9 +24,9 @@ export default function Mainpage() {
     const [pearlToken2Contract, setPearlToken2Contract] = useState("");
     const [stakingBalances, setStakingBalances] = useState(
         {
-            milk2StakingBalance: 0,
-            tea2StakingBalance: 0,
-            pearl2StakingBalance: 0
+            milk2StakingBalance: "",
+            tea2StakingBalance: "",
+            pearl2StakingBalance: ""
         }
     );
     const [bobaBalance, setBobaBalance] = useState(0);
@@ -34,6 +34,7 @@ export default function Mainpage() {
     const [openHarvestDialogue, setOpenHarvestDialogue] = useState(false);
     const [loadingStaking, setLoadingStaking] = useState(false);
     const [loadingHarvest, setLoadingHarvest] = useState(false);
+    const [isUpdatingStakeBalances, setIsUpdatingStakeBalances] = useState(false);
 
     const callGetWeb3 = async () => {
         return await getWeb3();
@@ -67,49 +68,38 @@ export default function Mainpage() {
         if (bobaFarmData) {
             const bobaFarm = new web3.eth.Contract(BobaFarm.abi, bobaFarmData.address);
             setBobaFarmContract(bobaFarm);
-            //Not implemented - not getting the correct values; but Etherscan is able to.
-            const _milk2StakingBalance = await bobaFarm.methods.getMilkStakingBalance(account).call({from: account});
-            const _tea2StakingBalance = await bobaFarm.methods.getTeaStakingBalance(account).call({from: account});
-            const _pearl2StakingBalance = await bobaFarm.methods.getPearlStakingBalance(account).call({from: account});
-            setStakingBalances(prevState => ({
-                ...prevState,
-                milk2StakingBalance: _milk2StakingBalance,
-                tea2StakingBalance: _tea2StakingBalance,
-                pearl2StakingBalance: _pearl2StakingBalance
-            }));
-            console.log(stakingBalances);
-            ///
         }
         else {
-            alert("BobaFarm contract not deployed to network");
+            alert("BobaFarm contract not deployed to network, please change to Ropsten Testnet Newtwork and refresh");
         }
     }
 
     const loadTokens = async (web3, account) => {
-        const netId = await web3.eth.net.getId();
-        const bobaTokenData = BobaToken.networks[netId];
-        const milkToken2Data = MilkToken2.networks[netId];
-        const teaToken2Data = TeaToken2.networks[netId];
-        const pearlToken2Data = PearlToken2.networks[netId];
-        const bobaToken = new web3.eth.Contract(BobaToken.abi, bobaTokenData.address);
-        const milkToken2 = new web3.eth.Contract(MilkToken2.abi, milkToken2Data.address);
-        const teaToken2 = new web3.eth.Contract(TeaToken2.abi, teaToken2Data.address)
-        const pearlToken2 = new web3.eth.Contract(PearlToken2.abi, pearlToken2Data.address);
-        setBobaContract(bobaToken);
-        setMilkToken2Contract(milkToken2);
-        setTeaToken2Contract(teaToken2);
-        setPearlToken2Contract(pearlToken2);
-        const _bobaBalance = await bobaToken.methods.balanceOf(account).call();
-        setBobaBalance(_bobaBalance);
-        console.log(bobaToken);
-        console.log(milkToken2);
-        console.log(teaToken2);
-        console.log(pearlToken2);
+        try {
+            const netId = await web3.eth.net.getId();
+            const bobaTokenData = BobaToken.networks[netId];
+            const milkToken2Data = MilkToken2.networks[netId];
+            const teaToken2Data = TeaToken2.networks[netId];
+            const pearlToken2Data = PearlToken2.networks[netId];
+            const bobaToken = new web3.eth.Contract(BobaToken.abi, bobaTokenData.address);
+            const milkToken2 = new web3.eth.Contract(MilkToken2.abi, milkToken2Data.address);
+            const teaToken2 = new web3.eth.Contract(TeaToken2.abi, teaToken2Data.address)
+            const pearlToken2 = new web3.eth.Contract(PearlToken2.abi, pearlToken2Data.address);
+            setBobaContract(bobaToken);
+            setMilkToken2Contract(milkToken2);
+            setTeaToken2Contract(teaToken2);
+            setPearlToken2Contract(pearlToken2);
+            const _bobaBalance = await bobaToken.methods.balanceOf(account).call();
+            setBobaBalance(_bobaBalance);
+        }
+        catch (err) {
+            console.log("Check Network");
+        }
     }
 
     const handleStaking = async (stakingAmounts) => {
-        setLoadingStaking(true);
         console.log(stakingAmounts);
+        setLoadingStaking(true);
         if (stakingAmounts.stakeMilk2Amount == "0" || stakingAmounts.stakeTea2Amount == "0" ||
             stakingAmounts.stakePearl2Amount == "0") {
             handleDialogueOpen();
@@ -124,14 +114,12 @@ export default function Mainpage() {
                 const tea2Tx = await teaToken2Contract.methods.approve(bobaFarmContract._address, toStakeTea2).send({from: account1});
                 const pearl2Tx = await pearlToken2Contract.methods.approve(bobaFarmContract._address, toStakePearl2).send({from: account1});
                 await bobaFarmContract.methods.stakeTokens(toStakeMilk2, toStakeTea2, toStakePearl2).send({from: account1});
-                console.log(milk2Tx);
-                console.log(tea2Tx);
-                console.log(pearl2Tx);
                 const _bobaBalance = await bobaContract.methods.balanceOf(account1).call();
                 setBobaBalance(_bobaBalance);
             }
             catch (err) {
                 console.log(err);
+                alert("Error with MetaMask");
             }
             finally {
                 setLoadingStaking(false);
@@ -156,6 +144,33 @@ export default function Mainpage() {
         }
     }
 
+    //Not implemented
+    // const handleUnstake = async () => {
+    // }
+
+    const getStakeBalances = async() => {
+        setIsUpdatingStakeBalances(true);
+        try {
+            const _milk2StakingBalance = await bobaFarmContract.methods.getMilkStakingBalance(account1).call({});
+            const _tea2StakingBalance = await bobaFarmContract.methods.getTeaStakingBalance(account1).call({});
+            const _pearl2StakingBalance = await bobaFarmContract.methods.getPearlStakingBalance(account1).call({});
+            setStakingBalances(prevState => ({
+                ...prevState,
+                milk2StakingBalance: _milk2StakingBalance,
+                tea2StakingBalance: _tea2StakingBalance,
+                pearl2StakingBalance: _pearl2StakingBalance
+            }));
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+        catch (err) {
+            console.log(err);
+            alert("Error with MetaMask");
+        }
+        finally {
+            setIsUpdatingStakeBalances(false);
+        }
+    }
+
     const handleDialogueOpen = () => {
         setOpenDialogue(true);
     }
@@ -174,7 +189,7 @@ export default function Mainpage() {
 
     useEffect(() => {
         const loadBlockchainData = async () => {
-            console.log(account);
+            //console.log(account);
             const web3 = await callGetWeb3();
             const acc = await loadAccount(web3);
             await loadFarm(web3, acc);
@@ -183,10 +198,15 @@ export default function Mainpage() {
         loadBlockchainData();
     }, [account])
 
-    useEffect( async () => {
-        window.ethereum.on("accountsChanged", handleAccountChange);
-        return () => {
-          window.ethereum.removeListener("accountsChanged", handleAccountChange);
+    useEffect(() => {
+        if (window.ethereum) {
+            window.ethereum.on("accountsChanged", handleAccountChange);
+            return () => {
+                window.ethereum.removeListener("accountsChanged", handleAccountChange);
+            }
+        }
+        else {
+            alert("Please install MetaMask!");
         }
       }, [account1])
 
@@ -203,7 +223,9 @@ export default function Mainpage() {
                 onStakingBalances={stakingBalances}
                 onRewardBalance={bobaBalance} 
                 onLoadingHarvest={loadingHarvest} 
-                onLoadingStaking={loadingStaking}/>
+                onLoadingStaking={loadingStaking}
+                onUpdateStakeBalances={getStakeBalances}
+                onUpdatingStakeBalances={isUpdatingStakeBalances}/>
             </Box>
 
             <Dialog
@@ -232,7 +254,7 @@ export default function Mainpage() {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        There are currently no rewards to harvest
+                        Error with MetaMask
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

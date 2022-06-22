@@ -12,16 +12,6 @@ import GrainIcon from '@mui/icons-material/Grain';
 
 export default function StakingTable(props) {
 
-    //const [bobaTokenAmount, setBobaTokenAmount] = useState();
-
-    const [currentStakedAmounts, setCurrentStakedAmounts] = useState(
-        {
-            stakedMilk2Amount: props.onStakingBalances.milk2StakingBalance,
-            stakedTea2Amount: props.onStakingBalances.tea2StakingBalance,
-            stakedPearl2Amount: props.onStakingBalances.pearl2StakingBalance
-        }
-    );
-
     const [stakingAmounts, setStakingAmounts] = useState(
         {
             stakeMilk2Amount: 0,
@@ -101,16 +91,26 @@ export default function StakingTable(props) {
 
     const onStake = () => {
         props.onStake(stakingAmounts);
+        milk2Input.current.value="";
+        tea2Input.current.value="";
+        pearl2Input.current.value="";
     };
 
     const onHarvest = () => {
         props.onHarvest();
     };
 
+    const onUpdateStakeBal = () => {
+        props.onUpdateStakeBalances();
+    }
+
     return(
         <Box sx={{display: "grid", justifyItems: "center"}}>
             <Typography variant="h5">Tokens</Typography>
             <Divider style={{width: "100%"}}/>
+            <Button onClick={onUpdateStakeBal} disabled={props.onUpdatingStakeBalances}>
+                {props.onUpdatingStakeBalances ? "Retreiving..." : "Get Staked Amounts on Farm"}
+            </Button>
             <Grid container spacing={25} paddingTop="10px">
                 <Grid item xs={4}>
                     <Card raised sx={{minWidth: 170}}>
@@ -135,7 +135,7 @@ export default function StakingTable(props) {
                                 inputRef={milk2Input} 
                                 error={milk2InputError} 
                                 helperText={milk2ErrorText}/>
-                                <Typography variant="button">Staked on Farm: {currentStakedAmounts.stakedMilk2Amount}</Typography>
+                                <Typography variant="button">Staked on Farm: {props.onStakingBalances.milk2StakingBalance}</Typography>
                             </Box>
                         </CardActions>
                     </Card>
@@ -163,7 +163,7 @@ export default function StakingTable(props) {
                                 inputRef={tea2Input} 
                                 error={tea2InputError} 
                                 helperText={tea2ErrorText}/>
-                                <Typography variant="button">Staked on Farm: {currentStakedAmounts.stakedTea2Amount}</Typography>
+                                <Typography variant="button">Staked on Farm: {props.onStakingBalances.tea2StakingBalance}</Typography>
                             </Box>
                         </CardActions>
                     </Card>
@@ -191,7 +191,7 @@ export default function StakingTable(props) {
                                 inputRef={pearl2Input} 
                                 error={pearl2InputError} 
                                 helperText={pearl2ErrorText}/>
-                                <Typography variant="button">Staked on Farm: {currentStakedAmounts.stakedPearl2Amount}</Typography>
+                                <Typography variant="button">Staked on Farm: {props.onStakingBalances.pearl2StakingBalance}</Typography>
                             </Box>
                         </CardActions>
                     </Card>
@@ -199,12 +199,16 @@ export default function StakingTable(props) {
             </Grid>
             <Divider style={{width: "100%", paddingTop:"10px"}}/>
             <Box sx={{display: "grid", justifyItems: "center", paddingTop: "10px", width: "100%"}}>
-                <Button variant="contained" fullWidth onClick={onStake} disabled={props.onLoadingStaking}>{props.onLoadingStaking ? "Working on it... MetaMask will pop up a number of times" : "Stake Tokens"}</Button>
+                <Button variant="contained" fullWidth onClick={onStake} disabled={props.onLoadingStaking}>
+                    {props.onLoadingStaking ? "Working on it... MetaMask will pop up a number of times" : "Stake Tokens"}
+                </Button>
             </Box>
             <Typography variant="h5" sx={{paddingTop: "40px"}}>Rewards</Typography>
             <Divider style={{width: "100%"}}/>
             <Box sx={{display: "grid", justifyItems: "center", paddingTop: "10px", width: "100%"}}>
-                <Button variant="contained" fullWidth onClick={onHarvest} disabled={props.onLoadingHarvest}>{props.onLoadingHarvest ? "Working on it..." : "Harvest Rewards"}</Button>
+                <Button variant="contained" fullWidth onClick={onHarvest} disabled={props.onLoadingHarvest}>
+                    {props.onLoadingHarvest ? "Working on it..." : "Harvest Rewards"}
+                </Button>
             </Box>
             <Box sx={{display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "10px", width: "100%"}}>
                 <Typography variant="h4" sx={{paddingTop: "20px"}}>Current wallet balance: </Typography>
