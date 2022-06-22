@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/BobaFarm/static/css/main.b100e6da.chunk.css",
+    "main.js": "/BobaFarm/static/js/main.4a98e468.chunk.js",
+    "main.js.map": "/BobaFarm/static/js/main.4a98e468.chunk.js.map",
+    "runtime-main.js": "/BobaFarm/static/js/runtime-main.35df4ceb.js",
+    "runtime-main.js.map": "/BobaFarm/static/js/runtime-main.35df4ceb.js.map",
+    "static/js/2.fd88cf5c.chunk.js": "/BobaFarm/static/js/2.fd88cf5c.chunk.js",
+    "static/js/2.fd88cf5c.chunk.js.map": "/BobaFarm/static/js/2.fd88cf5c.chunk.js.map",
+    "index.html": "/BobaFarm/index.html",
+    "precache-manifest.0f555467d387a1414778c5ecbe01732b.js": "/BobaFarm/precache-manifest.0f555467d387a1414778c5ecbe01732b.js",
+    "service-worker.js": "/BobaFarm/service-worker.js",
+    "static/css/main.b100e6da.chunk.css.map": "/BobaFarm/static/css/main.b100e6da.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.35df4ceb.js",
+    "static/js/2.fd88cf5c.chunk.js",
+    "static/css/main.b100e6da.chunk.css",
+    "static/js/main.4a98e468.chunk.js"
+  ]
+}
